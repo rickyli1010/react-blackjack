@@ -9,7 +9,11 @@ export interface Card {
   suit: string
 }
 
-export interface Hand {
-  cards: Card,
-  score: number
+export interface Cards {
+  cards: card
 }
+
+// export interface Hand {
+//   cards: Card,
+//   score: number
+// }

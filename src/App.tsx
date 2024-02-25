@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
+// import { useDispatch } from 'react-redux';
 
 import './App.css';
 import Hands from './components/Hands';
 import Controls from './components/Controls';
 import * as api from './api';
-import { Card, Hand } from './types';
+import { dealHands } from './actions/playerHand';
+import { Card } from './types';
 
 function App() {
+  // const dispatch = useDispatch();
+
   const [deckId, setDeckId] = useState('9dvj4zhacnn4'); // forTesting
-  const [playerHand, setplayerHand] = React.useState<Hand>();
+  // const [playerHand, setplayerHand] = React.useState<Hand>();
 
   const handleStart = async () => {
     if (!deckId.length) {
@@ -16,8 +20,10 @@ function App() {
       setDeckId(data?.deck_id);
     } else {
       const { data } = await api.shuffleAll(deckId);
+      // dispatch(dealHands(deckId));
     }
   };
+
   const handleHit = async () => {};
 
   return (
