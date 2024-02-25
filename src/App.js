@@ -4,11 +4,10 @@ import './App.css';
 import Hands from './components/Hands';
 import Controls from './components/Controls';
 import * as api from './api';
-import { Card, Hand } from './types';
 
 function App() {
   const [deckId, setDeckId] = useState('9dvj4zhacnn4'); // forTesting
-  const [playerHand, setplayerHand] = React.useState<Hand>();
+  const [playerHand, setplayerHand] = useState([]);
 
   const handleStart = async () => {
     if (!deckId.length) {

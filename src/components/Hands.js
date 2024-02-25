@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Hands = ({ title }: { title: string }) => {
+const Hands = ({ title }) => {
   return (
     <div className="flex flex-col items-center m-4 text-white">
       <p className="text-center">{title}</p>

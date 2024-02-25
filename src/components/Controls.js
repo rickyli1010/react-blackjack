@@ -1,12 +1,6 @@
 import React from 'react';
 
-const Controls = ({
-  handleHit,
-  handleStart
-}: {
-  handleHit: () => void;
-  handleStart: () => void;
-}) => {
+const Controls = ({ handleHit, handleStart }) => {
   return (
     <div className="flex m-10 justify-center">
       <div className="flex gap-10">
