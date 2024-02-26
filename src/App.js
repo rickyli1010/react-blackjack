@@ -4,32 +4,42 @@ import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import Hands from './components/Hands';
 import Controls from './components/Controls';
-import * as api from './api';
-import { dealStartingHands, dealPlayer } from './actions/hands';
-import { startGame, shuffleAll } from './actions/deck';
+import { dealPlayer } from './actions/hands';
+import { startGame } from './actions/deck';
+import { playerStand } from './actions/game';
 
 function App() {
   const dispatch = useDispatch();
-  const { playerHand, dealerHand } = useSelector((state) => state.hands);
-  const { deckId } = useSelector((state) => state.deck);
+  const { playerHand, dealerHand, playerScore, dealerScore } = useSelector(
+    (state) => state.hands
+  );
+  // const { deckId } = useSelector((state) => state.deck);
 
   const handleStart = async () => {
-    await dispatch(startGame(deckId));
-    await dispatch(dealStartingHands(deckId));
+    await dispatch(startGame());
   };
+
   const handleHit = async () => {
     await dispatch(dealPlayer());
+  };
+
+  const handleStand = async () => {
+    await dispatch(playerStand());
   };
 
   return (
     <div className="flex justify-center">
       <div className="m-10 w-[1000px]">
         <div className="border-4">
-          <Hands cards={dealerHand} title={'Dealer'} />
-          <Hands cards={playerHand} title={'You'} />
+          <Hands cards={dealerHand} score={dealerScore} title={'Dealer'} />
+          <Hands cards={playerHand} score={playerScore} title={'You'} />
         </div>
 
-        <Controls handleStart={handleStart} handleHit={handleHit} />
+        <Controls
+          handleStart={handleStart}
+          handleHit={handleHit}
+          handleStand={handleStand}
+        />
       </div>
     </div>
   );

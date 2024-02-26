@@ -1,4 +1,5 @@
 import * as api from '../api';
+import { dealStartingHands } from './hands';
 
 export const startGame = () => async (dispatch, getState) => {
   try {
@@ -17,14 +18,16 @@ export const startGame = () => async (dispatch, getState) => {
       dispatch({ type: 'SHUFFLE_ALL', payload: data });
       console.log(data);
     }
+    dispatch(dealStartingHands());
   } catch (error) {
     console.log(error.message);
   }
 };
 
-export const shuffleAll = (id) => async (dispatch, getState) => {
+export const shuffleAll = () => async (dispatch, getState) => {
   try {
-    const { data } = await api.shuffleAll(id);
+    const { deckId } = await getState().deck;
+    const { data } = await api.shuffleAll(deckId);
     dispatch({ type: 'SHUFFLE_ALL', payload: data });
     console.log(data);
   } catch (error) {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Controls = ({ handleHit, handleStart }) => {
+const Controls = ({ handleHit, handleStart, handleStand }) => {
   return (
     <div className="flex m-10 justify-center">
       <div className="flex gap-10">
@@ -10,7 +10,10 @@ const Controls = ({ handleHit, handleStart }) => {
         >
           Hit
         </button>
-        <button className="bg-white text-yellow-700 font-bold p-2 rounded-full w-40 outline-none">
+        <button
+          onClick={handleStand}
+          className="bg-white text-yellow-700 font-bold p-2 rounded-full w-40 outline-none"
+        >
           Stand
         </button>
         <button

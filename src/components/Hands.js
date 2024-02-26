@@ -1,9 +1,11 @@
 import React from 'react';
 
-const Hands = ({ cards, title }) => {
+const Hands = ({ cards, title, score }) => {
   return (
     <div className="flex flex-col items-center m-4 text-white min-h-52">
-      <p className="text-center">{title}</p>
+      <p className="text-center">
+        {title} {score > 0 && `(${score})`}
+      </p>
       <div className="flex justify-center flex-wrap">
         {cards.length ? (
           cards.map((card) => (
