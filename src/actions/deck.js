@@ -37,7 +37,6 @@ export const discardPile = () => async (dispatch, getState) => {
   const { deckId } = await getState().deck;
   const { dealerHand, playerHand } = getState().hands;
   const pileStr = getPileString(dealerHand, playerHand);
-  console.log('discard', pileStr);
   const { data } = await api.discardCards(deckId, pileStr);
   console.log('discard', data);
 };

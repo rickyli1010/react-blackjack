@@ -13,7 +13,6 @@ function App() {
     (state) => state.hands
   );
   const { winner } = useSelector((state) => state.game);
-  // const { deckId } = useSelector((state) => state.deck);
 
   const handleStart = async () => {
     await dispatch(startGame());

@@ -5,6 +5,8 @@ export default (state = { deckId: '', remaining: 0 }, action) => {
       return { ...state, deckId: action.payload.deck_id };
     case 'SHUFFLE_ALL':
       return { ...state, remaining: action.payload.remaining };
+    case 'UPDATE_REMAIN':
+      return { ...state, remaining: action.payload.remaining };
     default:
       return state;
   }

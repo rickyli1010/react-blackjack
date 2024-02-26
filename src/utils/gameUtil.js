@@ -28,7 +28,6 @@ export const calculateScore = (cards) => {
 };
 
 export const getPileString = (dealer, player) => {
-  console.log(dealer, player);
   let arr = [];
   for (let card of dealer) {
     arr.push(card.code);
@@ -36,7 +35,6 @@ export const getPileString = (dealer, player) => {
   for (let card of player) {
     arr.push(card.code);
   }
-  console.log(arr.join(','));
   return arr.join(',');
 };
 

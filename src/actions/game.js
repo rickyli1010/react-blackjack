@@ -7,12 +7,13 @@ export const startGame = () => async (dispatch, getState) => {
     const { dealerHand, playerHand } = await getState().hands;
 
     if (dealerHand.legnth || playerHand.length) {
-      // restart existing game
+      // Restart existing game
       console.log('restart');
       dispatch(discardPile());
       dispatch(dealStartingHands());
+      dispatch({ type: 'WINNER_RESET' });
     } else {
-      // new game
+      // New game
       const { deckId } = await getState().deck;
       console.log('deck', deckId);
 
