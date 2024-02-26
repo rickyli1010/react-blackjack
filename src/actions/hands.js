@@ -1,21 +1,30 @@
 import * as api from '../api';
-import { calculateScore } from '../utils/gameUtil';
+import { calculateScore, checkHands } from '../utils/gameUtil';
 
 export const dealStartingHands = () => async (dispatch, getState) => {
   try {
     const { deckId } = await getState().deck;
 
     // Deal two cards to player
-    let res = await api.drawTwo(deckId);
-    let data = res.data;
+    const res = await api.drawTwo(deckId);
+    const data = res.data;
     dispatch({ type: 'DEAL_PLAYER_HAND', payload: data });
     dispatch(calculatePlayerScore());
 
     // Deal two cards to dealer
-    res = await api.drawTwo(deckId);
-    data = res.data;
-    dispatch({ type: 'DEAL_DEALER_HAND', payload: data });
+    let response = await api.drawTwo(deckId);
+    let myData = response.data;
+    dispatch({ type: 'DEAL_DEALER_HAND', payload: myData });
     dispatch(calculateDealerScore());
+
+    // Get another two cards if they are the same (API issue)
+    const { dealerHand, playerHand } = await getState().hands;
+    if (checkHands(dealerHand, playerHand)) {
+      response = await api.drawTwo(deckId);
+      myData = response.data;
+      dispatch({ type: 'DEAL_DEALER_HAND', payload: myData });
+      dispatch(calculateDealerScore());
+    }
   } catch (error) {
     console.log(error.message);
   }

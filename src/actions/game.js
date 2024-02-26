@@ -1,3 +1,37 @@
+import { dealStartingHands } from './hands';
+import { newDeck, shuffleAll, discardPile } from './deck';
+import * as api from '../api';
+
+export const startGame = () => async (dispatch, getState) => {
+  try {
+    const { dealerHand, playerHand } = await getState().hands;
+
+    if (dealerHand.legnth || playerHand.length) {
+      // restart existing game
+      console.log('restart');
+      dispatch(discardPile());
+      dispatch(dealStartingHands());
+    } else {
+      // new game
+      const { deckId } = await getState().deck;
+      console.log('deck', deckId);
+
+      // New Deck
+      if (!deckId) {
+        console.log('no id');
+        // const { data } = api.newDeck();
+        dispatch(newDeck());
+      } else {
+        dispatch(shuffleAll());
+        dispatch(dealStartingHands());
+        dispatch({ type: 'WINNER_RESET' });
+      }
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 export const playerStand = () => async (dispatch) => {
   try {
     dispatch({ type: 'PLAYER_STAND' });

@@ -5,8 +5,7 @@ import './App.css';
 import Hands from './components/Hands';
 import Controls from './components/Controls';
 import { dealPlayer } from './actions/hands';
-import { startGame } from './actions/deck';
-import { playerStand } from './actions/game';
+import { playerStand, startGame } from './actions/game';
 
 function App() {
   const dispatch = useDispatch();

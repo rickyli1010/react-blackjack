@@ -26,3 +26,25 @@ export const calculateScore = (cards) => {
 
   return score;
 };
+
+export const getPileString = (dealer, player) => {
+  console.log(dealer, player);
+  let arr = [];
+  for (let card of dealer) {
+    arr.push(card.code);
+  }
+  for (let card of player) {
+    arr.push(card.code);
+  }
+  console.log(arr.join(','));
+  return arr.join(',');
+};
+
+export const checkHands = (dealer, player) => {
+  for (let card of dealer) {
+    if (card.code === player[0].code) {
+      return true;
+    }
+  }
+  return false;
+};

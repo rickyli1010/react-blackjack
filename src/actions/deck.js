@@ -1,25 +1,13 @@
 import * as api from '../api';
-import { dealStartingHands } from './hands';
+import { getPileString } from '../utils/gameUtil';
 
-export const startGame = () => async (dispatch, getState) => {
+export const newDeck = () => async (dispatch, getState) => {
   try {
-    const { deckId } = await getState().deck;
-    console.log('deck', deckId);
-
-    if (!deckId) {
-      console.log('no id');
-      // const { data } = api.newDeck();
-      dispatch({
-        type: 'NEW_DECK',
-        payload: { deck_id: '9dvj4zhacnn4' }
-      });
-    } else {
-      const { data } = await api.shuffleAll(deckId);
-      dispatch({ type: 'SHUFFLE_ALL', payload: data });
-      console.log(data);
-    }
-    dispatch(dealStartingHands());
-    dispatch({ type: 'WINNER_RESET' });
+    // const { data } = api.newDeck();
+    dispatch({
+      type: 'NEW_DECK',
+      payload: { deck_id: '9dvj4zhacnn4' }
+    });
   } catch (error) {
     console.log(error.message);
   }
@@ -29,9 +17,27 @@ export const shuffleAll = () => async (dispatch, getState) => {
   try {
     const { deckId } = await getState().deck;
     const { data } = await api.shuffleAll(deckId);
-    dispatch({ type: 'SHUFFLE_ALL', payload: data });
-    console.log(data);
+    console.log('shuffleAll', data);
   } catch (error) {
     console.log(error.message);
   }
+};
+
+export const shuffle = () => async (dispatch, getState) => {
+  try {
+    const { deckId } = await getState().deck;
+    const { data } = await api.shuffle(deckId);
+    console.log(shuffle, data);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const discardPile = () => async (dispatch, getState) => {
+  const { deckId } = await getState().deck;
+  const { dealerHand, playerHand } = getState().hands;
+  const pileStr = getPileString(dealerHand, playerHand);
+  console.log('discard', pileStr);
+  const { data } = await api.discardCards(deckId, pileStr);
+  console.log('discard', data);
 };
