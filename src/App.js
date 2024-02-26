@@ -5,25 +5,21 @@ import './App.css';
 import Hands from './components/Hands';
 import Controls from './components/Controls';
 import * as api from './api';
-import { dealStartingHands } from './actions/hands';
+import { dealStartingHands, dealPlayer } from './actions/hands';
+import { startGame, shuffleAll } from './actions/deck';
 
 function App() {
   const dispatch = useDispatch();
   const { playerHand, dealerHand } = useSelector((state) => state.hands);
-
-  const [deckId, setDeckId] = useState('9dvj4zhacnn4'); // forTesting
-  // const [playerHand, setplayerHand] = useState([]);
+  const { deckId } = useSelector((state) => state.deck);
 
   const handleStart = async () => {
-    if (!deckId.length) {
-      const { data } = await api.newDeck();
-      setDeckId(data?.deck_id);
-    } else {
-      api.shuffleAll(deckId);
-      await dispatch(dealStartingHands(deckId));
-    }
+    await dispatch(startGame(deckId));
+    await dispatch(dealStartingHands(deckId));
   };
-  const handleHit = async () => {};
+  const handleHit = async () => {
+    await dispatch(dealPlayer());
+  };
 
   return (
     <div className="flex justify-center">
