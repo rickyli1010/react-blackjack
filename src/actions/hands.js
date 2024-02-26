@@ -32,16 +32,16 @@ export const dealPlayer = () => async (dispatch, getState) => {
   }
 };
 
-export const dealDealer = () => async (dispatch, getState) => {
-  try {
-    const { deckId } = await getState().deck;
-    const { data } = await api.drawOne(deckId);
-    dispatch({ type: 'DEAL_DEALER', payload: data });
-    dispatch(calculateDealerScore());
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+// export const dealDealer = () => async (dispatch, getState) => {
+//   try {
+//     const { deckId } = await getState().deck;
+//     const { data } = await api.drawOne(deckId);
+//     dispatch({ type: 'DEAL_DEALER', payload: data });
+//     dispatch(calculateDealerScore());
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
 
 export const calculatePlayerScore = () => async (dispatch, getState) => {
   try {
@@ -55,8 +55,8 @@ export const calculatePlayerScore = () => async (dispatch, getState) => {
 
 export const calculateDealerScore = () => async (dispatch, getState) => {
   try {
-    const { playerHand } = await getState().hands;
-    const score = calculateScore(playerHand);
+    const { dealerHand } = await getState().hands;
+    const score = calculateScore(dealerHand);
     dispatch({ type: 'DEALERSCORE', payload: score });
   } catch (error) {
     console.log(error);

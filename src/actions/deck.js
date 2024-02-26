@@ -19,6 +19,7 @@ export const startGame = () => async (dispatch, getState) => {
       console.log(data);
     }
     dispatch(dealStartingHands());
+    dispatch({ type: 'WINNER_RESET' });
   } catch (error) {
     console.log(error.message);
   }

@@ -13,6 +13,7 @@ function App() {
   const { playerHand, dealerHand, playerScore, dealerScore } = useSelector(
     (state) => state.hands
   );
+  const { winner } = useSelector((state) => state.game);
   // const { deckId } = useSelector((state) => state.deck);
 
   const handleStart = async () => {
@@ -35,6 +36,7 @@ function App() {
           <Hands cards={playerHand} score={playerScore} title={'You'} />
         </div>
 
+        <div className="m-5 min-h-6 text-white text-center">{winner}</div>
         <Controls
           handleStart={handleStart}
           handleHit={handleHit}
