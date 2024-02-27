@@ -19,7 +19,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/rickyli1010/react-blackjack">
-    <img src="shareme_frontend/src/assets/logo.png" alt="Logo" width="304" height="63">
+    <img src="/src/assets/logo.png" alt="Logo" width="304" height="63">
   </a>
 
 <h3 align="center">React Blackjack</h3>
@@ -30,7 +30,7 @@
     <a href="https://github.com/rickyli1010/react-blackjack"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://share-me-rl.netlify.app/">View Demo</a>
+    <a href="https://rl-react-blackjack.netlify.app/">View Demo</a>
     ·
     <a href="https://github.com/rickyli1010/react-blackjack/issues">Report Bug</a>
     ·
@@ -68,7 +68,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://share-me-rl.netlify.app/)
+[![Product Name Screen Shot][product-screenshot]](https://rl-react-blackjack.netlify.app/)
 
 This is BlackJack game built with React. The user start with two cards and can click 'hit' to get more cards. The goal is to get as close to 21 points as possible. 
 
@@ -177,7 +177,7 @@ Project Link: [https://github.com/rickyli1010/react-blackjack](https://github.co
 [license-url]: https://github.com/rickyli1010/react-blackjack/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/ricky1010
-[product-screenshot]: https://github.com/rickyli1010/react-blackjack/assets/29339402/9f6b365a-c775-4905-8b4b-c9cfea152f53
+[product-screenshot]: https://github.com/rickyli1010/react-blackjack/assets/29339402/a70dac59-fa8d-499d-8ef3-00d55718c30e
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
