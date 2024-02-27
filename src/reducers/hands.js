@@ -28,6 +28,9 @@ export default (
         ...state,
         dealerScore: action.payload
       };
+    case 'RESET_HANDS': {
+      return { state, dealerHand: [], playerHand: [] };
+    }
     default:
       return state;
   }

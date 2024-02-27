@@ -1,5 +1,6 @@
 import { dealStartingHands } from './hands';
 import { newDeck, shuffleAll, discardPile } from './deck';
+import { getPileString } from '../utils/gameUtil';
 import * as api from '../api';
 
 export const startGame = () => async (dispatch, getState) => {
@@ -8,14 +9,19 @@ export const startGame = () => async (dispatch, getState) => {
 
     if (dealerHand.legnth || playerHand.length) {
       // Restart existing game
-      console.log('restart');
-      dispatch(discardPile());
-      dispatch(dealStartingHands());
+      const { deckId } = await getState().deck;
+
+      // discard cards to pile
+      const { dealerHand, playerHand } = await getState().hands;
+      const pileStr = getPileString(dealerHand, playerHand);
+      await api.discardCards(deckId, pileStr);
+      // dispatch(discardPile());
       dispatch({ type: 'WINNER_RESET' });
+      dispatch({ type: 'RESET_HANDS' });
+      dispatch(dealStartingHands());
     } else {
       // New game
       const { deckId } = await getState().deck;
-      console.log('deck', deckId);
 
       // New Deck
       if (!deckId) {
@@ -24,8 +30,9 @@ export const startGame = () => async (dispatch, getState) => {
         dispatch(newDeck());
       } else {
         dispatch(shuffleAll());
-        dispatch(dealStartingHands());
         dispatch({ type: 'WINNER_RESET' });
+        dispatch({ type: 'RESET_HANDS' });
+        dispatch(dealStartingHands());
       }
     }
   } catch (error) {
@@ -41,16 +48,6 @@ export const playerStand = () => async (dispatch) => {
     console.log(error.message);
   }
 };
-
-// export const dealerTurn = () => async (dispatch, getState) => {
-//   let { dealerScore } = await getState().hands;
-//   while (dealerScore < 17) {
-//     await dispatch(dealDealer());
-//     dealerScore = await getState().hands?.dealerScore;
-//   }
-
-//   await dispatch(calculateResult());
-// };
 
 export const calculateResult = () => async (dispatch, getState) => {
   const { playerScore, dealerScore } = await getState().hands;

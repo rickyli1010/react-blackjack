@@ -3,35 +3,62 @@ import { calculateScore, checkHands } from '../utils/gameUtil';
 
 export const dealStartingHands = () => async (dispatch, getState) => {
   try {
-    const { deckId } = await getState().deck;
+    let deckState = await getState().deck;
+    const deckId = deckState.deckId;
+    let remaining = deckState.remaining;
 
-    // Deal two cards to player
-    const res = await api.drawTwo(deckId);
-    const data = res.data;
-    dispatch({ type: 'DEAL_PLAYER_HAND', payload: data });
-    dispatch({ type: 'UPDATE_REMAIN', payload: data });
-    dispatch(calculatePlayerScore());
+    if (remaining === 1) {
+      dispatch(dealPlayer());
+      await api.returnPileToDeck(deckId);
+      await api.shuffle(deckId);
+      dispatch(dealPlayer());
+      dispatch(calculateDealerScore());
+    } else {
+      if (remaining === 0) {
+        await api.returnPileToDeck(deckId);
+        await api.shuffle(deckId);
+      }
 
-    // Deal two cards to dealer
-    let response = await api.drawTwo(deckId);
-    let myData = response.data;
-    console.log(myData);
-    dispatch({ type: 'DEAL_DEALER_HAND', payload: myData });
-    dispatch({ type: 'UPDATE_REMAIN', payload: myData });
-    dispatch(calculateDealerScore());
+      // Deal two cards to player
+      const res = await api.drawTwo(deckId);
+      const data = res.data;
+      dispatch({ type: 'DEAL_PLAYER_HAND', payload: data });
+      dispatch({ type: 'UPDATE_REMAIN', payload: data });
+      dispatch(calculatePlayerScore());
+    }
 
-    // Get another two cards if they are the same (API issue)
-    const { dealerHand, playerHand } = await getState().hands;
-    if (checkHands(dealerHand, playerHand)) {
-      response = await api.drawTwo(deckId);
-      myData = response.data;
+    deckState = await getState().deck;
+    remaining = deckState.remaining;
+
+    if (remaining === 1) {
+      dispatch(dealDealer());
+      await api.returnPileToDeck(deckId);
+      await api.shuffle(deckId);
+      dispatch(dealDealer());
+      dispatch(calculateDealerScore());
+    } else {
+      if (remaining === 0) {
+        await api.returnPileToDeck(deckId);
+        await api.shuffle(deckId);
+      }
+
+      // Deal two cards to dealer
+      let response = await api.drawTwo(deckId);
+      let myData = response.data;
       dispatch({ type: 'DEAL_DEALER_HAND', payload: myData });
       dispatch({ type: 'UPDATE_REMAIN', payload: myData });
       dispatch(calculateDealerScore());
-    }
 
-    const { remaining } = await getState().deck;
-    console.log('remaining', remaining);
+      // Get another two cards if they are the same (API issue)
+      const { dealerHand, playerHand } = await getState().hands;
+      if (checkHands(dealerHand, playerHand)) {
+        response = await api.drawTwo(deckId);
+        myData = response.data;
+        dispatch({ type: 'DEAL_DEALER_HAND', payload: myData });
+        dispatch({ type: 'UPDATE_REMAIN', payload: myData });
+        dispatch(calculateDealerScore());
+      }
+    }
   } catch (error) {
     console.log(error.message);
   }
@@ -39,7 +66,13 @@ export const dealStartingHands = () => async (dispatch, getState) => {
 
 export const dealPlayer = () => async (dispatch, getState) => {
   try {
-    const { deckId } = await getState().deck;
+    const { deckId, remaining } = await getState().deck;
+
+    // Check if any card remains
+    if (remaining === 0) {
+      await api.returnPileToDeck(deckId);
+      await api.shuffle(deckId);
+    }
     const { data } = await api.drawOne(deckId);
     dispatch({ type: 'DEAL_PLAYER', payload: data });
     dispatch(calculatePlayerScore());
@@ -49,16 +82,16 @@ export const dealPlayer = () => async (dispatch, getState) => {
   }
 };
 
-// export const dealDealer = () => async (dispatch, getState) => {
-//   try {
-//     const { deckId } = await getState().deck;
-//     const { data } = await api.drawOne(deckId);
-//     dispatch({ type: 'DEAL_DEALER', payload: data });
-//     dispatch(calculateDealerScore());
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
+export const dealDealer = () => async (dispatch, getState) => {
+  try {
+    const { deckId } = await getState().deck;
+    const { data } = await api.drawOne(deckId);
+    dispatch({ type: 'DEAL_DEALER', payload: data });
+    dispatch(calculateDealerScore());
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 export const calculatePlayerScore = () => async (dispatch, getState) => {
   try {

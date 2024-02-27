@@ -16,8 +16,7 @@ export const newDeck = () => async (dispatch, getState) => {
 export const shuffleAll = () => async (dispatch, getState) => {
   try {
     const { deckId } = await getState().deck;
-    const { data } = await api.shuffleAll(deckId);
-    console.log('shuffleAll', data);
+    await api.shuffleAll(deckId);
   } catch (error) {
     console.log(error.message);
   }
@@ -26,8 +25,7 @@ export const shuffleAll = () => async (dispatch, getState) => {
 export const shuffle = () => async (dispatch, getState) => {
   try {
     const { deckId } = await getState().deck;
-    const { data } = await api.shuffle(deckId);
-    console.log(shuffle, data);
+    await api.shuffle(deckId);
   } catch (error) {
     console.log(error.message);
   }
@@ -35,8 +33,7 @@ export const shuffle = () => async (dispatch, getState) => {
 
 export const discardPile = () => async (dispatch, getState) => {
   const { deckId } = await getState().deck;
-  const { dealerHand, playerHand } = getState().hands;
+  const { dealerHand, playerHand } = await getState().hands;
   const pileStr = getPileString(dealerHand, playerHand);
-  const { data } = await api.discardCards(deckId, pileStr);
-  console.log('discard', data);
+  await api.discardCards(deckId, pileStr);
 };

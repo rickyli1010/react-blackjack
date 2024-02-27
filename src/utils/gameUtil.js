@@ -39,8 +39,8 @@ export const getPileString = (dealer, player) => {
 };
 
 export const checkHands = (dealer, player) => {
-  for (let card of dealer) {
-    if (card.code === player[0].code) {
+  for (let card of player) {
+    if (card.code === dealer[0].code || card.code === dealer[1].code) {
       return true;
     }
   }

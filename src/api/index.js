@@ -10,3 +10,5 @@ export const drawOne = (deckId) => API.get(`${deckId}/draw`);
 export const drawTwo = (deckId) => API.get(`/${deckId}/draw/?count=2`);
 export const discardCards = (deckId, cardStr) =>
   API.get(`/${deckId}/pile/discard/add/?cards=${cardStr}`);
+export const returnPileToDeck = (deckId) =>
+  API.get(`${deckId}/pile/discard/return/`);

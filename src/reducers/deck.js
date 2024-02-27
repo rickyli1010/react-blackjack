@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (state = { deckId: '', remaining: 0 }, action) => {
+export default (state = { deckId: '', remaining: 52 }, action) => {
   switch (action.type) {
     case 'NEW_DECK':
       return { ...state, deckId: action.payload.deck_id };
