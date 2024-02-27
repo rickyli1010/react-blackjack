@@ -103,8 +103,6 @@ To get a local copy up and running follow these simple example steps.
 - [Sanity](https://www.npmjs.com/package/sanity)
 - [TailwindCSS](https://www.npmjs.com/package/tailwindcss)
 
-notice, you need client and server runs concurrently in different terminal session, in order to make them talk to each other
-
 ### Client-side usage(PORT: 3000)
 
 #### Prepare your secret
@@ -169,7 +167,7 @@ Project Link: [https://github.com/rickyli1010/react-blackjack](https://github.co
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/rickyli1010/react-blackjack.svg?style=for-the-badge
 [contributors-url]: https://github.com/rickyli1010/react-blackjack/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/rickyli1010react-blackjack.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/rickyli1010/react-blackjack.svg?style=for-the-badge
 [forks-url]: https://github.com/rickyli1010/react-blackjack/network/members
 [stars-shield]: https://img.shields.io/github/stars/rickyli1010/react-blackjack.svg?style=for-the-badge
 [stars-url]: https://github.com/rickyli1010/react-blackjack/stargazers
