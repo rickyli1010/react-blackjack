@@ -19,7 +19,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/rickyli1010/react-blackjack">
-    <img src="/src/assets/logo.png" alt="Logo" width="304" height="63">
+    <img src="/src/assets/logo.png" alt="Logo" width="250" height="250">
   </a>
 
 <h3 align="center">React Blackjack</h3>
