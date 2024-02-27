@@ -15,7 +15,6 @@ export const startGame = () => async (dispatch, getState) => {
       const { dealerHand, playerHand } = await getState().hands;
       const pileStr = getPileString(dealerHand, playerHand);
       await api.discardCards(deckId, pileStr);
-      // dispatch(discardPile());
       dispatch({ type: 'WINNER_RESET' });
       dispatch({ type: 'RESET_HANDS' });
       dispatch(dealStartingHands());
@@ -25,9 +24,12 @@ export const startGame = () => async (dispatch, getState) => {
 
       // New Deck
       if (!deckId) {
-        console.log('no id');
-        // const { data } = api.newDeck();
-        dispatch(newDeck());
+        const { data } = await api.newDeck();
+        dispatch({
+          type: 'NEW_DECK',
+          payload: data
+        });
+        dispatch(dealStartingHands());
       } else {
         dispatch(shuffleAll());
         dispatch({ type: 'WINNER_RESET' });
@@ -42,7 +44,6 @@ export const startGame = () => async (dispatch, getState) => {
 
 export const playerStand = () => async (dispatch) => {
   try {
-    dispatch({ type: 'PLAYER_STAND' });
     dispatch(calculateResult());
   } catch (error) {
     console.log(error.message);

@@ -1,18 +1,6 @@
 import * as api from '../api';
 import { getPileString } from '../utils/gameUtil';
 
-export const newDeck = () => async (dispatch, getState) => {
-  try {
-    // const { data } = api.newDeck();
-    dispatch({
-      type: 'NEW_DECK',
-      payload: { deck_id: '9dvj4zhacnn4' }
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
 export const shuffleAll = () => async (dispatch, getState) => {
   try {
     const { deckId } = await getState().deck;
